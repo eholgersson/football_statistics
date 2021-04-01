@@ -4,21 +4,23 @@ import pandas as pd
 import numpy as np 
 import requests
 import json
-
+import api_config as cfg
 import os
 print(os.getcwd())
 
 def config():
     global headers
+    api_key = cfg.api_key['key']
     headers = {
-        "x-apisports-key" : "40318c646a5a6de8bdf14598488b9519"
+        "x-apisports-key" : api_key
     }
 
 def get_response():
     url = "https://v3.football.api-sports.io/teams/statistics"
     payload={}
+    api_key = cfg.api_key['key']
     headers = {
-        "x-apisports-key" : "40318c646a5a6de8bdf14598488b9519"
+        "x-apisports-key" : api_key
     }
 
     resp = requests.get(url=url, headers=headers, data=payload)
