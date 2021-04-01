@@ -10,7 +10,7 @@ print(os.getcwd())
 
 def config():
     global headers
-    api_key = cfg.api_key['key']
+    api_key = cfg.api_config['key']
     headers = {
         "x-apisports-key" : api_key
     }
@@ -18,7 +18,7 @@ def config():
 def get_response():
     url = "https://v3.football.api-sports.io/teams/statistics"
     payload={}
-    api_key = cfg.api_key['key']
+    api_key = cfg.api_key['api_key']
     headers = {
         "x-apisports-key" : api_key
     }
@@ -59,8 +59,20 @@ def save_to_csv(df, filename):
 def get_team_statistics(team, league, year):
     config()
     
-    url = ""
+    url = cfg.api_config['url']
+    api_key = cfg.api_config['api_key']
+    
     resp = requests.get(url, headers=headers)
+
+    resp = resp.json()
+
+    # team statistic: json to df
+    
+    df = pd.json_normalize(resp['response'])
+    print(df.head())
+    
+    return df
+
 
 def main():
     
